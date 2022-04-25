@@ -1,0 +1,92 @@
+{% extends 'base.html'%}
+{% block content %}
+{% include 'header.html'%}
+{% load static %}
+<div class="container profile my-3 py-4 px-3">
+    <div class="row ">
+        <h3 class="d-flex justify-content-end text-success">Hi 🖐🏻 {{request.user.first_name}}</h3>
+    </div>
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+      <strong>Message ! </strong>{{ message }}
+    </div>
+    {%endfor%}
+    <div class="row profile-img my-3">
+        <div class="col-md-auto">
+          {% if user_img %}
+          <img src="{{user_img.profilePicture.url}}" alt="..." />
+          {%else%}
+          <img src="{% static 'image/profile.png'%}" alt="..." />
+          {%endif%}
+        </div>
+        <div class="col-md">
+        <h2>{{user.first_name | title}} {{user.last_name | title}}</h2>
+        </div>
+    </div>
+    <div>
+        <h4>Email: {{user.email}}</h4>
+    </div>
+    <div>
+        <h4>Username: {{user.username}}</h4>
+    </div>
+    <div class="my-3">
+      {% if not user_img %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Add Picture
+          </button>
+        {%endif%}
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePassword">
+            Change Password
+          </button>
+
+    </div>
+   
+      
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Add Picture</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form enctype="multipart/form-data" action="/addProfile/{{request.user.id}}" method="post" >
+            <div class="modal-body">
+                 {% csrf_token %}
+                 <input type="hidden" name="id" value="{{request.user.id}}">
+                 <input type="file" class="form-control" name="profilePicture">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="changePassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/changePassword/{{request.user.id}}" method="POST">
+            <div class="modal-body">
+                 {% csrf_token %}
+                 <label for="currentPassword" class="form-label my-2">New Password</label>
+                 <input type="password" class="form-control" name="newPassword">
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+</div>
+{%endblock%}

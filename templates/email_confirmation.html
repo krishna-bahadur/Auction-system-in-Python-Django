@@ -1,0 +1,7 @@
+{% autoescape off %}
+Welcome {{name}} ! to Auction system login
+Please confirm your email by clicking on the link below
+confirmation Link: 
+{% comment %} http://{{ domain }}{% url 'activate' uid token %}  {% endcomment %}
+http://{{ domain }}{{activate}}/activate/{{uid}}/{{token}}
+{% endautoescape %}

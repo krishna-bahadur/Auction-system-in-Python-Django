@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'header.html'%}
+<div class="container bg-white rounded-3 my-3 py-3 px--2">
+  <div class="row">
+    <div class="col-md">
+      <h3>Product: {{productsDetail.title}}</h3>
+
+    </div>
+    <div class="col-md d-flex justify-content-end mx-3">
+      <a  href="/">Back</a>
+
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-5">
+      <img src="/media/{{productsDetail.image}}" class="pro-image">
+      <div class="row">
+        {% for pi in productsDetail.productimages_set.all %}
+        <div class="col-md-4 p-3">
+          <a href="{{pi.image.url}}" target="_blank">
+            <img src="{{pi.images.url}}" class="img-fluid border mx-2">
+          </a>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+    <div class="col-md-7 px-3">
+      <h4>{{productsDetail.title}}</h4>
+      <hr>
+      <h5>Category: {{productsDetail.category}}</h5>
+      <h5>Minimum Price: NRs. {{productsDetail.actualAmount}}</h5>
+      <hr>
+
+
+
+
+
+
+      {% if user.is_authenticated%}
+      {% if current_time >= productsDetail.startingTime and current_time <= productsDetail.EndingTime %} {% comment %}
+        <form method="post" action="/details/{{productsDetail.id}}" class="text-center">
+        {% csrf_token %}
+        <h5 class="text-primary">Bid Here:</h5>
+        <input type="number" name="bidPricebidPrice" placeholder="Enter bid price" class="form-control">
+        <input type="submit" class="btn btn-info my-2 px-5" value="Bid">
+        </form> {% endcomment %}
+        {%if err_message %}
+        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+          <strong class="mx-2">Message !</strong>{{err_message}}
+        </div>
+        {%endif%}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+          <strong>Message ! </strong>{{ message }}
+        </div>
+        {%endfor%}
+        <form action="/details/{{productsDetail.id}}" method="post">{% csrf_token %}
+          <div class="form-group">
+            <input type="number" class="form-control" id="bidPrice" name="bidPrice" placeholder="Enter your bid amount"
+              required>
+            <input type="hidden" value='{{ productsDetail.actualAmount }}' name="minimum_price" id="minimum_price">
+            <input type="hidden" value='{{ productsDetail.id }}' name="product_id" id="product_id">
+            <input type="submit" class="btn btn-info my-2 px-5" value="Bid">
+          </div>
+        </form>
+        {%else%}
+        <h3>startingTime:{{productsDetail.startingTime}}</h2>
+          <h3>startingTime:{{productsDetail.EndingTime}}</h2>
+       
+            {%endif%}
+            {%endif%}
+
+            <hr>
+
+    </div>
+  </div>
+  {% if user.is_authenticated%}
+  {% if bids%}
+  <div class="my-3 d-flex justify-content-center bidders">
+    <table class="table table-borderless">
+      <thead>
+        <tr class="my-5">
+          <th colspan="3" class="text-end text-info" scope="col">
+            <h2>Current bid Rs:
+              {{ current_max_bid.bidPrice__max}}
+            </h2>
+          </th>
+        </tr>
+        <tr>
+          <th scope="col">Bid price</th>
+          <th scope="col">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bids %}
+        <tr>
+
+          <td>{{b.bidPrice}}</td>
+          <td>{{b.time}}</td>
+        </tr>
+        {%endfor%}
+
+      </tbody>
+    </table>
+
+  </div>
+  {%endif%}
+  {%endif%}
+  <hr>
+
+  <div class="my-2">
+    <p>{{productsDetail.description|safe}}</p>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}
