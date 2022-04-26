@@ -204,13 +204,12 @@ def details(request, id):
     productsDetail = Product.objects.get(id=id)
     bids = Bid.objects.all().filter(product=id).order_by('-id')
     bid_count = Bid.objects.all().filter(product=id).count()
-    bid_duration = productsDetail.EndingTime - productsDetail.startingTime
     current_time = tz.now()
     
     current_max_bid = Bid.objects.all().filter(product=id).aggregate(Max('bidPrice'))
     try:
         if request.method == "POST":
-            if int(request.POST.get('minimum_price')) > int(request.POST.get('bidPrice')):
+            if int(request.POST.get('minimum_price')) >= int(request.POST.get('bidPrice')):
                 messages.error(request,"Bid price should be more than minimum price")
             else:
                 if bid_count>0:
@@ -220,20 +219,15 @@ def details(request, id):
                             return redirect(f"/details/{id}")
                     
                     for i in bids:
-                        if i.bidPrice < int(request.POST.get('bidPrice')):
+                        if i.bidPrice <= int(request.POST.get('bidPrice')):
                             bid = Bid(time = datetime.now().strftime('%H:%M:%S'),bidPrice=request.POST.get('bidPrice'),user=request.user,product=Product.objects.get(id=request.POST.get('product_id')))
                             bid.save()
                             messages.success(request, "you Bid successfully.")
                             return redirect(f"/details/{id}")
-                        # else:
-                        #     messages.error(request,"Sorry your price must be higher than others")
-                        #     return redirect(f"/details/{id}")
-                        
-                    
                 else:
                     bid = Bid(time = datetime.now().strftime('%H:%M:%S'),bidPrice=request.POST.get('bidPrice'),user=request.user,product=Product.objects.get(id=request.POST.get('product_id')))
                     bid.save()
-                    messages.success(request, "you successfully.")
+                    messages.success(request, "you Bid successfully.")
                     return redirect(f"/details/{id}")
                     
         return render(request, "details.html" ,
@@ -279,5 +273,10 @@ def changePassword(request, id):
             
         
            
+# def sendMail(request, id):
+#     bid_count = Bid.objects.all().filter(product=id).count()
+#     if bid_count > 1:
+        
+#     return redirect('/')
     
     
