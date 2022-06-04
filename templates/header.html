@@ -27,8 +27,8 @@
                   Welcome 😊 {{ request.user.first_name}}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                  <li><a class="dropdown-item" href="profile/{{request.user.id}}">Profile</a></li>
-                  <li><a class="dropdown-item" href="">Bid Items</a></li>
+                  <li><a class="dropdown-item" href="/profile/{{request.user.id}}">Profile</a></li>
+                  <li><a class="dropdown-item" href="/user_bids">Bid Items</a></li>
                   <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
               </li>

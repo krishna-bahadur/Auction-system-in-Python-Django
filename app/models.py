@@ -52,6 +52,8 @@ class Bid(models.Model):
     bidPrice =models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    status = models.BooleanField(blank=True,null=True)
+    payment = models.BooleanField(blank=True,null=True)
     
     # def __str__(self):
     #     return self.product
@@ -68,7 +70,12 @@ class UserDetails(models.Model):
     user_profile.allow_tags = True
     
     
-    
+class Payment(models.Model):
+    user = models.CharField(max_length=100,blank=True, null=True)
+    token = models.CharField(max_length=100,blank=True, null=True)
+    amount = models.CharField(max_length=100,blank=True, null=True)
+    product = models.CharField(max_length=100,blank=True, null=True)
+    paymentId = models.CharField(max_length=100,blank=True, null=True)
     
     
     

@@ -1,0 +1,155 @@
+{% extends 'base.html'%}
+{%block content%}
+{%include 'header.html'%}
+<div class="container my-3 ">
+  <style>
+    errorBorder {
+      border: 2px solid red !important;
+    }
+  </style>
+  <div class="user_bid rounded-3 p-3">
+    <div class="row">
+      <div class="col-md">
+        <h3>Your bids:</h3>
+      </div>
+      <div class="col-md d-flex justify-content-end mx-3">
+        <a href="/">Back</a>
+
+      </div>
+    </div>
+    <hr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Time</th>
+          <th scope="col">Bid Price</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in User_bid %}
+        {% if u.status == True%}
+        <tr>
+          <td ><a href="details/{{u.product.id}}" id="product">{{u.product}}</a></td>
+          <td>{{u.time}}</td>
+          <td>{{u.bidPrice}}</td>
+
+          <td>Winner</td>
+          {% if u.payment == True%}
+          <td class="text-success">Payment Success</td>
+          {%else%}
+          <td>
+            <button type="button" id="pay" data-id="{{u.id}}" onclick="getData(`${'{{u.id}}'}`)"
+              class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Make Payment
+            </button>
+
+          </td>
+          {%endif%}
+          
+
+        </tr>
+        {%endif%}
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="form" action="khaltiPayment" method="POST" class="row g-3 needs-validation" novalidate onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Additional Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+            <strong>Message ! </strong>{{ message }}
+          </div>
+          {%endfor%}
+          <div class="modal-body">
+            <div class="form-floating my-3">
+              <input type="number" class="form-control" id="floatingPhone" placeholder="Phone Number" name="phone"
+                required>
+              <label for="floatingPhone">Phone Number</label>
+              <div class="invalid-feedback">
+                Please enter you phone number.
+              </div>
+              <small class="text-danger" id="phoneError">
+              </small>
+            </div>
+            <div class="form-floating my-3">
+              <input type="text" name="address" id="floatingAddress" class="form-control" placeholder="Current Address"
+                required>
+              <label for="floatingAddress" class="form-label">Current Address</label>
+              <small class="text-danger" id="err">
+              </small>
+              <div class="invalid-feedback">
+                please enter your address.
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="p" id ="product_val">
+          <input type="hidden" name="id" id="priceValue">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div> 
+
+</div>
+<script>
+  let pay = document.getElementById("pay");
+  let bidprice = document.getElementById("priceValue");
+  function getData(x) {
+    bidprice.value = x;
+  }
+  const product =  document.getElementById('product');
+  const product_val = document.getElementById('product_val');
+
+
+  const form = document.getElementById('form');
+  const phone = document.getElementById('floatingPhone');
+  const address = document.getElementById('floatingAddress');
+  const input = document.querySelector('.form-control')
+
+
+
+  function validateForm() {
+    const phone = document.getElementById('floatingPhone').value;
+    if (phone.length != 10) {
+      document.getElementById("phoneError").innerHTML = "Phone number must be 10 digit";
+      input.classList.add("error");
+      document.getElementById("phoneError").style.display = "block";
+      return false;
+    }
+    else {
+      document.getElementById("phoneError").style.display = "none";
+      input.classList.add("success");
+      input.classList.remove("error");
+      return true;
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+</script>
+{% include 'use.html'%}
+
+{%endblock%}

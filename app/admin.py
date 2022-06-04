@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib import admin
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch.dispatcher import receiver
-from app.models import Category, Product, ProductImages, Bid, UserDetails
+from app.models import Category, Product, ProductImages, Bid, UserDetails, Payment
 import os
 from tinymce.widgets import TinyMCE
 from tinymce.models import HTMLField 
@@ -70,7 +70,7 @@ class ProductImagesAdmin(admin.ModelAdmin):
             pass
     
 class BidAdmin(admin.ModelAdmin):
-    list_display = ('product', 'user','bidPrice','time')
+    list_display = ('product', 'user','bidPrice','time','status','payment')
     search_fields = ['product__title']
     list_per_page = 20
     
@@ -78,7 +78,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'description')
 
 class UserDetailsAdmin(admin.ModelAdmin):
-    list_display = ['user','user_profile']
+    list_display = ['user','user_profile','phone','address']
     
     #delete image from folder when deleting post
     @receiver(pre_delete, sender=UserDetails)
@@ -87,7 +87,11 @@ class UserDetailsAdmin(admin.ModelAdmin):
             instance.profilePicture.delete(save=False)
         except:
             pass
-    
+        
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('paymentId','product', 'user','amount','token')   
+
+admin.site.register(Payment,PaymentAdmin)    
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(ProductImages,ProductImagesAdmin)

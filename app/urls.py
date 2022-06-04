@@ -14,6 +14,10 @@ urlpatterns = [
     path('profile/<int:id>',views.profile, name='profile'),
     path('changePassword/<int:id>',views.changePassword, name='changePassword'),
     path('addProfile/<int:id>',views.addProfile, name='addProfile'),
+    path('user_bids',views.user_bids, name="user_bids"),
+    path('khaltiPayment',views.khaltiPayment),
+    path('khaltiPaymentVerify',views.khaltiPaymentVerify),
+    
    
 
     

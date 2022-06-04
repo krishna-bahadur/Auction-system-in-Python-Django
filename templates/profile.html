@@ -29,18 +29,32 @@
     <div>
         <h4>Username: {{user.username}}</h4>
     </div>
-    <div class="my-3">
-      {% if not user_img %}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Add Picture
-          </button>
-        {%endif%}
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePassword">
-            Change Password
-          </button>
-
-    </div>
-   
+    {% if user_img.address and user_img.phone%}
+    <div>
+      <h4>Address: {{user_img.address}}</h4>
+  </div>
+  <div>
+    <h4>Phone Number: {{user_img.phone}}</h4>
+</div>
+{%endif%}
+<div class="row my-3">
+  <div class="col-md-6 ">
+    {% if not user_img %}
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Add Picture
+        </button>
+      {%endif%}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePassword">
+          Change Password
+        </button>
+  </div>
+  <div class="col-md-6 text-end">
+    <a href="/user_bids" class="btn btn-info">Check my Bids</a>
+  </div>
+ 
+</div>
+    
+    
       
       <!-- Modal -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -51,11 +65,16 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <form enctype="multipart/form-data" action="/addProfile/{{request.user.id}}" method="post" >
+            <form enctype="multipart/form-data" action="/addProfile/{{request.user.id}}" method="post" class="needs-validation" novalidate >
             <div class="modal-body">
                  {% csrf_token %}
                  <input type="hidden" name="id" value="{{request.user.id}}">
-                 <input type="file" class="form-control" name="profilePicture">
+                 <div>
+                  <input type="file" class="form-control" name="profilePicture" required>
+                  <div class="invalid-feedback">
+                    Please provide a image.
+                  </div>
+                 </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -73,12 +92,18 @@
               <h5 class="modal-title" id="staticBackdropLabel">Change Password</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/changePassword/{{request.user.id}}" method="POST">
+            <form id="formP" action="/changePassword/{{request.user.id}}" method="POST" class="needs-validation" novalidate>
             <div class="modal-body">
                  {% csrf_token %}
-                 <label for="currentPassword" class="form-label my-2">New Password</label>
-                 <input type="password" class="form-control" name="newPassword">
-
+                 <div class="form-floating my-3">
+                  <input type="password" name="newPassword" id="floatingNewPassword" class="form-control" placeholder="New Password" required>
+                  <label for="floatingPassword" class="form-label">New Password</label>
+                  <div class="invalid-feedback">
+                    Please provide a valid Password.
+                  </div>
+                  <small class="text-danger" id="small"></small>
+                </div>
+                
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -88,5 +113,39 @@
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 </div>
+<script>
+  const password = document.getElementById('floatingNewPassword');
+  const form = document.getElementById('formP');
+  const small = document.getElementById('small');
+
+  form.addEventListener('submit',(e)=>{
+   if(password.value.length < 5){
+    e.preventDefault()
+    small.innerHTML="Password must have atleat 5 letters.";
+    document.getElementById('floatingNewPassword').classList.add("error")
+   }
+
+  });
+
+</script>
+{% include 'use.html'%}
+
 {%endblock%}

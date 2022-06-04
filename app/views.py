@@ -1,4 +1,9 @@
+from audioop import add
+from distutils.log import error
+from email import message
+from sre_constants import SUCCESS
 from this import d
+from django.http import JsonResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -9,7 +14,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from datetime import date, datetime
 from app.forms import BidForms
-from app.models import Bid, Category, Product, UserDetails
+from app.models import Bid, Category, Payment, Product, UserDetails
 from demo import settings
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
@@ -19,7 +24,7 @@ from django.utils.encoding import force_str
 from . tokens import generate_token
 from django.db.models import Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import requests
 
 
 def index(request):
@@ -143,13 +148,6 @@ def signup(request):
 
             messages.success(request,"Your account has been successfully created. We have sent you a confirmation email, Please confirm your accoount.")
 
-            #welcome email text
-            subject = "Welcome to HAMRO AUCTION SYSTEM"
-            message = "Hello... "+ myuser.first_name + "!!\n"+"Thank you for visiting our website\n\n we have sent you a confirmation email, please confirm your email address in order to activate your account.\n\n Thank you\n Krishna"
-            from_email = settings.EMAIL_HOST_USER
-            to_email_list = [myuser.email]
-            send_mail(subject, message, from_email, to_email_list, fail_silently=True)
-
             #Email Address Confirmation Email
             current_site = get_current_site(request)
             email_subject = "Confirm your Email for Login!!"
@@ -205,8 +203,27 @@ def details(request, id):
     bids = Bid.objects.all().filter(product=id).order_by('-id')
     bid_count = Bid.objects.all().filter(product=id).count()
     current_time = tz.now()
-    
     current_max_bid = Bid.objects.all().filter(product=id).aggregate(Max('bidPrice'))
+  
+    #winner of the product by using latest bid and send email
+    if productsDetail.EndingTime <= current_time:
+        latest_bid = Bid.objects.filter(product=id).order_by('-id')[0]
+        latest_bid.status = True
+        latest_bid.save()
+        subject = "Welcome to HAMRO AUCTION SYSTEM"
+        message = "Hello... "+latest_bid.user.first_name+" You are the winner of "+latest_bid.product.title+" product you have bid !! check your profile now\nThank you..\nFrom auction system"
+        from_email = settings.EMAIL_HOST_USER
+        to_email_list = [latest_bid.user.email]
+        send_mail(subject, message, from_email, to_email_list, fail_silently=True)
+    
+       
+        
+    
+    
+
+    
+    
+    
     try:
         if request.method == "POST":
             if int(request.POST.get('minimum_price')) >= int(request.POST.get('bidPrice')):
@@ -221,6 +238,12 @@ def details(request, id):
                     for i in bids:
                         if i.bidPrice <= int(request.POST.get('bidPrice')):
                             bid = Bid(time = datetime.now().strftime('%H:%M:%S'),bidPrice=request.POST.get('bidPrice'),user=request.user,product=Product.objects.get(id=request.POST.get('product_id')))
+                            current_bid = Bid.objects.filter(product=id).order_by('-id')[0]
+                            subject = "Welcome to HAMRO AUCTION SYSTEM"
+                            message = "Hello... "+current_bid.user.first_name+" Some other user has bid more than your price in the product you bid\nLets bid higher price\nThank you..\nFrom auction system"
+                            from_email = settings.EMAIL_HOST_USER
+                            to_email_list = [current_bid.user.email]
+                            send_mail(subject, message, from_email, to_email_list, fail_silently=True)  
                             bid.save()
                             messages.success(request, "you Bid successfully.")
                             return redirect(f"/details/{id}")
@@ -271,12 +294,58 @@ def changePassword(request, id):
         messages.success(request,"Password change successsfully")
         return redirect('/signin')
             
-        
-           
-# def sendMail(request, id):
-#     bid_count = Bid.objects.all().filter(product=id).count()
-#     if bid_count > 1:
-        
-#     return redirect('/')
+          
+def user_bids(request):
+    User_bid = Bid.objects.filter(user = request.user)
+    return render(request,'user_bids.html',{'User_bid':User_bid})
+
     
     
+def khaltiPayment(request):
+    if request.method == "POST":
+        id = request.POST['id']
+        User_bid = Bid.objects.get(id = id)
+        user_detail = UserDetails.objects.get(user=request.user)
+        user_detail.phone = request.POST['phone']
+        user_detail.address= request.POST['address']
+        user_detail.save()
+        return render(request,"KhaltiPayment.html",{'p':User_bid})
+    
+    
+def khaltiPaymentVerify(request):
+    token =request.GET.get("token")
+    amount = request.GET.get("amount")
+    product = request.GET.get("product")
+    id = request.GET.get("product_id")
+    print(token, amount, product)
+    int_amount = int(amount);
+    a = int_amount/100
+    actual_amount = str(a)
+    url = "https://khalti.com/api/v2/payment/verify/"
+    payload = {
+        "token": token,
+        "amount": amount,
+    }
+    headers = {
+        "Authorization": "Key test_secret_key_7481b3ff03b8478f9c420d773421761c"
+    }
+    
+    response = requests.post(url, payload, headers = headers)
+    resp_dict = response.json()
+    # print(resp_dict)
+    # print(request)
+    # print(resp_dict.get('idx'))
+    if resp_dict.get('idx'):
+        success = True
+        bid = Bid.objects.get(id=id)
+        bid.payment = True
+        bid.save()
+        payment = Payment(user = request.user,token = token,amount = actual_amount, product = product, paymentId=resp_dict.get('idx'))
+        payment.save()
+        # if true then save the data as it is paid
+    else:
+        success = False
+    data ={
+        "success" : success
+    }
+    return JsonResponse(data)
