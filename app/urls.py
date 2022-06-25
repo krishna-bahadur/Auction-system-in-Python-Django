@@ -17,6 +17,16 @@ urlpatterns = [
     path('user_bids',views.user_bids, name="user_bids"),
     path('khaltiPayment',views.khaltiPayment),
     path('khaltiPaymentVerify',views.khaltiPaymentVerify),
+    path('aboutus',views.aboutus),
+    path('contact',views.contact),
+    path('sellwithus',views.sellwithus),
+    path('verygood',views.verygood),
+    path('good',views.good),
+    path('average',views.average),
+    path('bad',views.bad),
+    path('verybad',views.verybad),
+    
+    
     
    
 

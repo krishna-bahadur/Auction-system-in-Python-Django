@@ -2,9 +2,16 @@
 {% block content %}
 {% include 'header.html'%}
 <div class="container bg-white rounded-3 my-3 py-3 px--2">
+  {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+          <strong>Message ! </strong>{{ message }}
+        </div>
+    {%endfor%}
   <div class="row">
-    <div class="col-md">
+    <div class="col-md viewicon">
       <h3>Product: {{productsDetail.title}}</h3>
+      <i class="fa-regular fa-eye"></i>
+      <span>views :{{productsDetail.post_view}}</span>
 
     </div>
     <div class="col-md d-flex justify-content-end mx-3">
@@ -15,7 +22,7 @@
   <hr>
   <div class="row">
     <div class="col-md-5">
-      <img src="/media/{{productsDetail.image}}" class="pro-image">
+      <img src="{{productsDetail.image.url}}" class="pro-image">
       <div class="row">
         {% for pi in productsDetail.productimages_set.all %}
         <div class="col-md-4 p-3">
@@ -32,6 +39,7 @@
       <h5>Category: {{productsDetail.category}}</h5>
       <h5>Minimum Price: NRs. {{productsDetail.actualAmount}}</h5>
       <hr>
+      
 
 
 
@@ -70,8 +78,9 @@
           <h3>startingTime:{{productsDetail.EndingTime}}</h2>
        
             {%endif%}
+            {%else%}
+            <a href="/signin" class="btn btn-info my-2 px-5">Bid Now</a>
             {%endif%}
-
             <hr>
 
     </div>
@@ -96,9 +105,10 @@
       <tbody>
         {% for b in bids %}
         <tr>
-
-          <td>{{b.bidPrice}}</td>
+          <td>{{b.bidPrice}}{% if b.user == request.user %}<span class="text-warning mx-3">Your bid</span> {%endif%}</td>
+         
           <td>{{b.time}}</td>
+          
         </tr>
         {%endfor%}
 
@@ -113,6 +123,45 @@
   <div class="my-2">
     <p>{{productsDetail.description|safe}}</p>
   </div>
+  <hr>
+  {% if user.is_authenticated%}
+  {%if rating.user != request.user%}
+  <div class="rating my-5">
+    <div class="text-center">
+      <h3>How was this product ?</h3>
+    </div>
+    
+    <div class="emoji text-center my-3">
+      <form action="/verygood" method="post" class="mx-4">
+        {%csrf_token%}
+        <input type="hidden" value="{{productsDetail.id}}" name="id">
+        <button type="submit" class="first">😀</button>
+      </form>
+      <form action="/good" method="post" class="mx-4">
+        {%csrf_token%}
+        <input type="hidden" value="{{productsDetail.id}}" name="id">
+        <button type="submit" class="second">😊</button>
+      </form>
+      <form action="/average" method="post" class="mx-4">
+        {%csrf_token%}
+        <input type="hidden" value="{{productsDetail.id}}" name="id">
+        <button type="submit" class="third">🙂</button>
+      </form>
+      
+      <form action="/bad" method="post" class="mx-4">
+        {%csrf_token%}
+        <input type="hidden" value="{{productsDetail.id}}" name="id">
+        <button type="submit" class="fourth">😐</button>
+      </form>
+      <form action="/verybad" method="post" class="mx-4">
+        {%csrf_token%}
+        <input type="hidden" value="{{productsDetail.id}}" name="id">
+        <button type="submit" class="fifth">😣</button>
+      </form>
+    </div>
+  </div>
+  {%endif%}
+  {%endif%}
 </div>
 </div>
 

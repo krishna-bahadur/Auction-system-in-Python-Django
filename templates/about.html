@@ -1,0 +1,66 @@
+{%include 'base.html'%}
+{% block content %}
+{% include 'header.html'%}
+{% load static %}
+<div class="bg-dark text-light text-center py-5">
+    <h1><strong>About Us Page</strong></h1>
+    <h4>Welcome to Hamro Auction System </h4>
+    <p>Auction System is the online auction site that lets you sell and buy products of differnt brand & category,
+        you'll love it</p>
+</div>
+<div class="text-center ourteam my-4">
+    <h2>Our Team</h2>
+</div>
+<div class="container">
+    <div class="row teammember">
+        <div class="col-md-4 text-center">
+            <div>
+                <img src="{% static 'image/me.jpg'%}" alt="">
+            </div>
+            <div>
+                <h3>Krishna Bk</h3>
+            </div>
+            <div>
+                <h5 style="color: gray;">CEO & Founder</h5>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam sapiente corporis, voluptates quam
+                    molestias nihil reprehenderit soluta ex quae ea sed.</p>
+            </div>
+        </div>
+      
+        <div class="col-md-4 text-center">
+            <div>
+                <img src="{% static 'image/pushpa.jpg'%}" alt="">
+            </div>
+            <div>
+                <h3>Pushpa raj Dhangi</h3>
+            </div>
+            <div>
+                <h5 style="color: gray;">Deigner & Programmer</h5>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam sapiente corporis, voluptates quam
+                    molestias nihil reprehenderit soluta ex quae ea sed.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div>
+                <img src="{% static 'image/sweta.jpg'%}" alt="">
+            </div>
+            <div class="my-2">
+                <h3>Sweta Dhakal</h3>
+            </div>
+            <div>
+                <h5 style="color: gray;">Director</h5>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam sapiente corporis, voluptates quam
+                    molestias nihil reprehenderit soluta ex quae ea sed.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{%endblock%}

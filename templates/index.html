@@ -15,96 +15,94 @@
 </head>
 
 <body>
-{% include 'header.html'%}
+    {% include 'header.html'%}
     {% for message in messages %}
-        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
-          <strong>Message ! </strong>{{ message }}
+    <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+        <strong>Message ! </strong>{{ message }}
+    </div>
+    {%endfor%}
+    <div id="carouselExampleIndicators" class="carousel slide container-fluid p-0" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
         </div>
-        {%endfor%}
-        <div id="carouselExampleIndicators" class="carousel slide container-fluid p-0" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner rounded-2 mt-2">
-                <div class="carousel-item active">
-                    <img src="{% static 'image/one.png'%}" class="d-block w-100" alt="..." />
+        <div class="carousel-inner rounded-2 mt-2">
+            <div class="carousel-item active">
+                <img src="{% static 'image/one.png'%}" class="d-block w-100" alt="..." />
 
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'image/two.jpg'%}" class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
-                    <img src="{% static 'image/three.jpg'%}" class="d-block w-100" alt="..." />
-                </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            <div class="carousel-item">
+                <img src="{% static 'image/two.jpg'%}" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'image/three.jpg'%}" class="d-block w-100" alt="..." />
+            </div>
         </div>
-        <div class="container">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="container">
         <div class="row no-gutters my-3 p-0">
             <div class="col-md-3 my-3 products">
                 <div class="card mx-2 h-100">
-                        <div class="card-body p-0 ">
-                            <ul class="list-group">
-                                <li class="list-group-item active" aria-current="true">
-                                    <a class="text-light"  href="\">All Products</a>   
-                                </li>
-                                {% for cat in category %}
-                                <li class="list-group-item">
-                                    <a href="/?category={{cat.id}}">{{cat.title}}</a>
-                                </li>
-                                {%endfor%}
-                              </ul>
-                        </div>
+                    <div class="card-body p-0 ">
+                        <ul class="list-group">
+                            <li class="list-group-item active" aria-current="true">
+                                <a class="text-light" href="\">All Products</a>
+                            </li>
+                            {% for cat in category %}
+                            <li class="list-group-item">
+                                <a href="/?category={{cat.id}}">{{cat.title}}</a>
+                            </li>
+                            {%endfor%}
+                        </ul>
+                    </div>
                     </a>
                 </div>
             </div>
-            
+
             {% for p in products %}
             <div class="col-md-3 my-3 products p-0">
-                <div class="card mx-2 p-1">
-                    <a href="details/{{p.id}}" class="text-decoration-none">
-                    <img src="media/{{p.image}}" class="card-img-top" alt="...">
+                <a href="details/{{p.id}}" class="text-decoration-none">
+                    <div class="card mx-2 p-1">
+                        <img src="{{p.image.url}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h4 class="card-title">{{p.title}}</h4>
                             <h5 class=" text-dark ">Rs {{p.actualAmount}}</h5>
                         </div>
-                       
-                           
-                            {% if current_time >= p.startingTime and current_time <= p.EndingTime %}
-                            <div class="text-light p-3 bg-primary">
-                            <strong>Start Bidding Now.</strong> 
-                            </div>
-                            {%elif current_time < p.startingTime  %}
-                            <div class="text-light p-3 bg-success">
-                            Starting in <strong>{{p.startingTime}}</strong>
-                            </div>
-                            {%else%}
-                            <div class="text-light p-3 bg-danger">
-                            Bidding Has been Over
-                            </div>
-                            {%endif%}
-                            
-                    </a>
-                </div>
+                        {% if current_time >= p.startingTime and current_time <= p.EndingTime %} 
+                        <div class="text-light p-3 bg-primary">
+                            <strong>Start Bidding Now.</strong>
+                        </div>
+                    {%elif current_time < p.startingTime %}
+                     <div class="text-light p-3 bg-success">
+                        Starting in <strong>{{p.startingTime}}</strong>
+                    </div>
+            {%else%}
+            <div class="text-light p-3 bg-danger">
+                Bidding Has been Over
             </div>
-            {% endfor %}
+            {%endif%}
         </div>
-        {% include 'pagination.html '%}
-        
+    </a>
+
+    </div>
+    {% endfor %}
+    </div>
+    {% include 'pagination.html '%}
+
     </div>
 
 </body>
@@ -112,6 +110,3 @@
 </html>
 {%include 'footer.html'%}
 {% endblock %}
-
-
-

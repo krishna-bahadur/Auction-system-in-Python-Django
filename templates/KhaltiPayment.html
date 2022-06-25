@@ -7,7 +7,7 @@
     {{p.product}}
 </div>
 
-    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     
@@ -17,11 +17,10 @@
    
     <script>
         var config = {
-            // replace the publicKey with yours
-            "publicKey": "test_public_key_3a36efc8d53743439d18b5457868bda4",
+            "publicKey": "test_public_key_debab4e187d049b8a6c16033620b529d",
             "productIdentity": "{{p.id}}",
             "productName": "{{p.product}}",
-            "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+            "productUrl": "http://127.0.0.1:8000",
             "paymentPreference": [
                 "KHALTI",
                 "EBANKING",
@@ -31,8 +30,6 @@
                 ],
             "eventHandler": {
                 onSuccess (payload) {
-                   // console.log(payload);
-                    // hit merchant api for initiating verfication
                     axios.get('khaltiPaymentVerify',{
                         params :{
                             "token": payload.token,
@@ -43,7 +40,7 @@
                     }).then(function(resp){
                         //console.log(resp.data);
                         if( resp.data.success == true){
-                            alert("Payment is Succefull");
+                            alert("Payment is Succefull. Details of payment is sent to your email account.");
                             location.href="/";
                         }
                         else{

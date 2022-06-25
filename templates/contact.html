@@ -1,0 +1,97 @@
+{%include 'base.html'%}
+{% block content %}
+{% include 'header.html'%}
+<div class="container ">
+    <div class="text-center my-4 ">
+        <h2>Contact us page</h2>
+    </div>
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-center" role="alert">
+        <strong>Message ! </strong>{{ message }}
+    </div>
+    {%endfor%}
+    <div class="row justify-content-center my-4">
+        <div class="col-md-10 contact">
+            <div class="row no-gutters">
+                <div class="col-md-6 userform">
+                    <form action="" method="post" class="needs-validation" novalidate>
+                        <div class="my-3 ">
+                            <h4 style="color: gray;">Send us Message</h4>
+                        </div>
+                        {% csrf_token %}
+                        <div class="form-floating my-3">
+                            <input type="text" name="fullname" id="floatingName" class="form-control" placeholder="Name"
+                                required>
+                            <label for="floatingAddress" class="form-label">Full Name</label>
+                            <div class="invalid-feedback">
+                                Please enter your name.
+                            </div>
+                        </div>
+                        <div class="form-floating my-3">
+                            <input type="email" name="email" id="floatingEmail" class="form-control" placeholder="Name"
+                                required>
+                            <label for="floatingAddress" class="form-label">Email</label>
+                            <div class="invalid-feedback">
+                                Please provide your email.
+                            </div>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" id="floatingMessage" name="message"
+                                placeholder="Leave a comment here" id="floatingTextarea" required
+                                style="height: 100px"></textarea>
+                            <label for="floatingTextarea">Message</label>
+                            <div class="invalid-feedback">
+                                Please provide some message.
+                            </div>
+                        </div>
+                        <input type="submit" value="submit" class="btn btn-success my-3">
+                    </form>
+                </div>
+                <div class="col-md-6 py-4">
+                    <div class="my-3 ">
+                        <h3 class="contactus">Contact us</h3>
+                        <p>We're open for any suggestion or just to have a chat</p>
+                        <div class="my-3 d-flex align">
+                            <div>
+                                <i class="fa-solid fa-location-dot mx-3"></i>
+                            </div>
+                            <div>
+                                <span class="mx-2">Address:</span> Kathmandu Nepal
+
+                            </div>
+                        </div>
+                        <div class="my-3 d-flex align">
+                            <div>
+                                <i class="fa-solid fa-phone mx-3"></i>
+                            </div>
+                            <div>
+                                <span class="mx-2">Phone:</span> +977 9817405449
+                            </div>
+                        </div>
+                        <div class="my-3 d-flex align">
+                            <div>
+                                <i class="fa-solid fa-paper-plane mx-3"></i>
+                            </div>
+                            <div>
+                                <span class="mx-2">Email:</span> hamroauctionsystem@gmail.com
+                            </div>
+                        </div>
+                        <div class="my-3 d-flex align">
+                            <div>
+                                <i class="fa-solid fa-earth-africa mx-3"></i>
+                            </div>
+                            <div>
+                                <span class="mx-2">Website:</span> hamroauctionsystem.com
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% include 'use.html'%}
+{%endblock%}

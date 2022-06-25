@@ -2,13 +2,18 @@ from django.db import models
 from django.contrib import admin
 from django.db.models.signals import pre_delete, pre_save
 from django.dispatch.dispatcher import receiver
-from app.models import Category, Product, ProductImages, Bid, UserDetails, Payment
+from app.models import Category, Message, Product, ProductImages, Bid, Rating, Seller, UserDetails, Payment
 import os
 from tinymce.widgets import TinyMCE
 from tinymce.models import HTMLField 
+from import_export.admin import ImportExportModelAdmin
 
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'admin_photo','actualAmount','category')
+
+
+
+
+class ProductAdmin(ImportExportModelAdmin):
+    list_display = ('id','title', 'admin_photo','actualAmount','category','post_view')
     #filter product by category and starting time
     list_filter = ('category','startingTime')
     list_per_page = 20
@@ -75,10 +80,10 @@ class BidAdmin(admin.ModelAdmin):
     list_per_page = 20
     
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description')
+    list_display = ('id','title', 'description')
 
 class UserDetailsAdmin(admin.ModelAdmin):
-    list_display = ['user','user_profile','phone','address']
+    list_display = ['user','phone','address']
     
     #delete image from folder when deleting post
     @receiver(pre_delete, sender=UserDetails)
@@ -90,7 +95,19 @@ class UserDetailsAdmin(admin.ModelAdmin):
         
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('paymentId','product', 'user','amount','token')   
+    
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('fullname','email','message')
 
+class SellerAdmin(admin.ModelAdmin):
+    list_display = ('user','fullname','description')
+    
+class RatingAdmin(ImportExportModelAdmin):
+    list_display = ('user','product','rate')
+
+admin.site.register(Rating,RatingAdmin)
+admin.site.register(Seller, SellerAdmin)
+admin.site.register(Message,MessageAdmin)
 admin.site.register(Payment,PaymentAdmin)    
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Product,ProductAdmin)

@@ -1,28 +1,5 @@
-<div class="my-5">
-    <footer class="text-center bg-primary text-lg-start text-light" >
-        <div>
-            <a href="" class="text-white me-4">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="" class="text-white me-4">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="" class="text-white me-4">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="" class="text-white me-4">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="" class="text-white me-4">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="" class="text-white me-4">
-                <i class="fab fa-github"></i>
-            </a>
-        </div>
-
-        </section>
-
+<div class="py-5">
+    <footer class="text-center  text-lg-start text-light py-1">
         <section class="">
             <div class="container text-center text-md-start mt-5">
 
@@ -30,8 +7,7 @@
 
                     <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                         <h6 class="text-uppercase fw-bold">Hamro Auction</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"/>
                         <p>
                             Here you can bid your product within your interrest by filtering catgeory wise.
                             elit.
@@ -40,8 +16,7 @@
 
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <h6 class="text-uppercase fw-bold">Products</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"/>
                         {% for cat in category %}
 
                         <p>
@@ -54,8 +29,7 @@
 
                     <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                         <h6 class="text-uppercase fw-bold">Useful links</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" />
                         <p>
                             {% if user.is_authenticated%}
                             <a href="/profile/{{request.user.id}}" class="text-light">Your Account</a>
@@ -67,16 +41,51 @@
                         <p>
                             <a href="#!" class="text-light">Help</a>
                         </p>
+                        <p>
+                            <a href="/aboutus" class="text-light">About us</a>
+                        </p>
+                        <p>
+                            <a href="/contact" class="text-light">Conatct us</a>
+                        </p>
                     </div>
 
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <h6 class="text-uppercase fw-bold">Contact</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p><i class="fas fa-home mr-3"></i> Sinamangal, Kathmandu, Nepal</p>
-                        <p><i class="fas fa-envelope mr-3"></i> hamroauctionsystem@gmail.com</p>
-                        <p><i class="fas fa-phone mr-3"></i> + 0190875632</p>
-                        <p><i class="fas fa-print mr-3"></i> + 9817405440</p>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"/>
+                        <div class="my-3 d-flex align">
+                            <div>
+                            <i class="fa-solid fa-location-dot mx-3"></i>
+                            </div>
+                            <div >
+                                 Kathmandu Nepal
+    
+                            </div>
+                        </div>
+                        <div class="my-3 d-flex align" >
+                            <div>
+                                <i class="fa-solid fa-phone mx-3"></i>
+                            </div>
+                            <div >
+                                +977 9817405449
+                            </div>
+                        </div>
+                        <div class="my-3 d-flex align">
+                            <div>
+                                <i class="fa-solid fa-paper-plane mx-3"></i>
+                            </div>
+                            <div >
+                                 hamroauctionsystem@gmail.com
+                            </div>
+                        </div>
+                        <div class="my-3 d-flex align">
+                            <div>
+                                <i class="fa-solid fa-earth-africa mx-3"></i>
+                            </div>
+                            <div>
+                            hamroauctionsystem.com
+                                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

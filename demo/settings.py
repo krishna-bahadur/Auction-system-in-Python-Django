@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'tinymce',
+    'fontawesomefree',
+    'import_export',
 ]
 
 MIDDLEWARE = [

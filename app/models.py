@@ -1,3 +1,4 @@
+from msilib.schema import Class
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
@@ -21,6 +22,8 @@ class Product(models.Model):
     actualAmount = models.IntegerField()
     startingTime = models.DateTimeField()
     EndingTime = models.DateTimeField()
+    post_view =models.IntegerField(default=0,null=True,blank=True)
+  
     
 
     def admin_photo(self):
@@ -55,8 +58,7 @@ class Bid(models.Model):
     status = models.BooleanField(blank=True,null=True)
     payment = models.BooleanField(blank=True,null=True)
     
-    # def __str__(self):
-    #     return self.product
+   
     
 class UserDetails(models.Model):
     profilePicture = models.ImageField(upload_to="media/profile")
@@ -77,5 +79,28 @@ class Payment(models.Model):
     product = models.CharField(max_length=100,blank=True, null=True)
     paymentId = models.CharField(max_length=100,blank=True, null=True)
     
+    def __str__(self):
+        return self.product
     
     
+class Message(models.Model):
+    fullname = models.CharField(max_length=100,blank=True, null=True)
+    email = models.CharField(max_length=100,blank=True, null=True)
+    message = models.CharField(max_length=500,blank=True, null=True)
+    
+    def __str__(self):
+        return self.fullname
+    
+    
+class Seller(models.Model):
+    fullname = models.CharField(max_length=100,blank=True,null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
+    
+    def __str__(self):
+        return self.fullname
+
+class Rating(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    rate = models.IntegerField(default=0)
