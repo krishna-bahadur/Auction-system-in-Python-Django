@@ -1,9 +1,3 @@
-from audioop import add
-from distutils.log import error
-from email import message
-from itertools import product
-from sre_constants import SUCCESS
-from this import d
 from django.http import JsonResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
@@ -13,8 +7,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
-from datetime import date, datetime
-from app.forms import BidForms
+from datetime import datetime
 from app.models import Bid, Category, Message, Payment, Product, Rating, Seller, UserDetails
 from demo import settings
 from django.core.mail import send_mail
@@ -28,8 +21,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import requests
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-import time
+
 
 def index(request):
     category = Category.objects.all()
