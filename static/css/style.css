@@ -1,0 +1,296 @@
+.signin form{
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+body{
+    font-family: sans-serif;
+}
+.signinhere{
+    border-bottom: 2px solid #d9cccc;
+}
+.loginbtn a{
+    text-decoration: none;
+}
+.loginbtn {
+    align-items: center;
+    
+}
+
+.categories span {
+    display: block;
+    width: fit-content;
+}
+.categories{
+    background-color:#fff;
+    border-radius:4px;
+
+}
+.navbar{
+    background-color: #084298;
+}
+.carousel-item img{
+    background-color:#808080;
+    height:400px;
+}
+
+.products .card {
+   
+    transition: transform 1.2s;
+    border: none;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+
+.products .card-body{
+    bottom:0;
+    padding: 0  10px;
+  
+}
+.products .card-title{
+    margin-bottom:4px;
+    font-size:16px;
+    color:blue;
+    text-transform:uppercase;
+    margin-top:10px;
+}
+.products a{
+    text-decoration: none;
+}
+.products h6{
+    font-size: 12px!important;
+}
+ 
+
+    .products img {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    body {
+        font-family: 'Roboto Condensed', sans-serif;
+        background-color: #f5f5f5
+    }
+
+    .hedding {
+        font-size: 20px;
+        color: #ab8181;
+    }
+
+    .left-side-product-box img {
+        width: 100%;
+    }
+
+    .left-side-product-box .sub-img img {
+        margin-top: 10px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .right-side-pro-detail span {
+        font-size: 15px;
+    }
+
+    .right-side-pro-detail p {
+        font-size: 25px;
+        color: #a1a1a1;
+    }
+
+    .right-side-pro-detail .price-pro {
+        color: #E45641;
+    }
+
+    .right-side-pro-detail .tag-section {
+        font-size: 18px;
+        color: #5D4C46;
+    }
+
+    .pro-box-section .pro-box img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .border{
+        box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+        border-radius: 4px;
+    }
+    .pro-image{
+        width: 450px;
+    }
+    .bidders table{
+        width: 80%;
+        background-color: #000;
+        color: #fff;
+        border-radius: 7px !important;
+    }
+    .title{
+        border-bottom: 1px solid #000;
+    }
+    .profile{
+        background-color: #fff;
+        border-radius: 5px;
+    }
+.profile-img img{
+    width: 150px !important;
+    border-radius: 50%;
+    border: 2px solid;
+    object-fit: cover;
+    height: 150px;
+
+}
+.profile-img{
+    align-items: center;
+}
+.user_bid{
+    background-color: #fff;
+}
+
+.error{
+    border : 1px solid #dc3545 !important;
+}
+.success{
+    border: 1px solid #198754;
+}
+.footer a{
+    color: #f5f5f5 !important;
+}
+.about{
+    background-color: #fff;
+}
+.ourteam h2::before{
+    position: absolute;
+    content: '';
+    width: 10%;
+    bottom: 0;
+    height: 2px;
+    background-color: #c90dfd;
+}
+.ourteam h2{
+     position: relative;
+     
+}
+.teammember img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.contact{
+    background-color: #fff;
+
+}
+.contactus{
+    position: relative;
+}
+.contactus::after{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: #d62196;
+    content: '';
+}
+.svg-inline--fa{
+    border: 1px solid #c9baba;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 20px;
+}
+.align{
+    align-items: center;
+}
+.sellwithus{
+    background-color: #fff;
+}
+.sellwithus h4{
+    position: relative;
+}
+.sellwithus h4::after{
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: #d62196;
+    width: 10%;
+}
+footer{
+    background-color: #084298;
+}
+footer hr{
+    width: 60px;
+    background-color: #fff !important;
+     height: 2px !important; 
+}
+.viewicon .svg-inline--fa{
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+}
+.viewicon span{
+    font-size: 12px;
+}
+.emoji button{
+    border: none;
+    background-color: transparent;
+    font-size: 30px;
+    padding: 0;
+}
+.emoji form{
+    display: inline;
+
+}
+.first,.second,.third,.fourth,.fifth{
+    position: relative;
+}
+.first::after{
+    position: absolute;
+    content: 'very good';
+    height: 0px;
+    background-color: #000;
+    width: fit-content;
+    bottom: 0;
+    font-size: 11px;
+    left: 0;
+}
+.second::after{
+    position: absolute;
+    content: 'good';
+    height: 0px;
+    background-color: #000;
+    width: 100%;
+    bottom: 0;
+    font-size: 11px;
+    left: 0;
+}
+.third::after{
+    position: absolute;
+    content: 'average';
+    height: 0px;
+    background-color: #000;
+    width: 100%;
+    bottom: 0;
+    font-size: 11px;
+    left: 0;
+}
+.fourth::after{
+    position: absolute;
+    content: 'bad';
+    height: 0px;
+    background-color: #000;
+    width: 100%;
+    bottom: 0;
+    font-size: 11px;
+    left: 0;
+}
+.fifth::after{
+    position: absolute;
+    content: 'very bad';
+    height: 0px;
+    background-color: #000;
+    width: 100%;
+    bottom: 0;
+    font-size: 11px;
+    left: 0;
+}
